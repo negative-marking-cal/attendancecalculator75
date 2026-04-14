@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attendance Calculator 75% – Check Bunk Limit & Shortage</title>
+<meta name="description" content="Check how many classes you can bunk or how many you still need to attend. Free attendance calculator for AKTU, VTU, Anna University, Mumbai University and all Indian colleges. No login needed.">
+<link rel="canonical" href="https://attendancecalculator75.in/">
+<link rel="alternate" hreflang="en-IN" href="https://attendancecalculator75.in/">
+<meta property="og:title" content="Attendance Calculator 75% – How Many Classes Can You Bunk?">
+<meta property="og:description" content="Check instantly how many classes you can still bunk without falling below 75%. Free tool for Indian college students.">
+<meta property="og:url" content="https://attendancecalculator75.in/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://attendancecalculator75.in/assets/og/og-image.png">
+<meta name="twitter:image" content="https://attendancecalculator75.in/assets/og/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="/assets/favicon/" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+
+<!-- Apple / iOS -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+
+<!-- Android / PWA -->
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/android-chrome-512x512.png">
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --teal: #2F6F68;
+  --teal-dark: #245a54;
+  --teal-light: #e8f3f2;
+  --teal-mid: #c5dedd;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --amber-bg: #fef3c7;
+  --amber: #d97706;
+  --amber-border: #fcd34d;
+  --text: #111827;
+  --text-2: #6b7280;
+  --border: #e5e7eb;
+  --bg: #f3f7f6;
+  --white: #ffffff;
+  --radius: 14px;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+  --input-error: #fee2e2;
+  --input-error-border: #fca5a5;
+  --input-warn: #fef3c7;
+  --input-warn-border: #fcd34d;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  background: var(--teal);
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding-left: 200px;  
+
+}
+
+.nav-logo-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-logo-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-logo-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+.nav-logo-text span {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-links a {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  text-decoration: none;
+  padding: 6px 13px;
+  border-radius: 8px;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: #fff; background: rgba(255,255,255,0.12); }
+.nav-links .btn-coffee {
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  color: #fff !important;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12.5px;
+}
+.nav-links .btn-coffee:hover { background: rgba(255,255,255,0.25) !important; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 16px; }
+  .nav-links a:not(.btn-coffee) { display: none; }
+  .nav-logo { padding-left: 60px; }  /* ← Mobile pe thoda kam */
+}
+
+/* ── HERO ── */
+.hero-intro {
+  background: var(--bg);
+  padding: 36px 20px 32px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.hero-intro h1 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+  line-height: 1.2;
+  color: var(--text);
+}
+.hero-intro .hero-sub {
+  font-size: 14px;
+  color: var(--text-2);
+  margin-top: 10px;
+  font-weight: 400;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* ── WRAP ── */
+.wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px 14px 32px;
+}
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  gap: 0;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  flex: 1;
+  padding: 8px 6px;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-2);
+  cursor: pointer;
+  border: none;
+  background: none;
+  white-space: nowrap;
+  min-width: 78px;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: .1px;
+}
+.tab.active {
+  background: var(--teal);
+  color: #fff;
+  box-shadow: 0 1px 6px rgba(47,111,104,.35);
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+}
+h3.card-title, .card-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+/* ── INPUTS ── */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.field { position: relative; }
+.field label {
+  display: block;
+  font-size: 11.5px;
+  color: var(--text-2);
+  margin-bottom: 5px;
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+
+.field input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+  font-family: inherit;
+  background: var(--white);
+}
+.field input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(47,111,104,.1);
+}
+
+/* ── INPUT VALIDATION STATES ── */
+.field input.input-error {
+  border-color: var(--red) !important;
+  background: var(--input-error);
+  box-shadow: 0 0 0 3px rgba(220,38,38,.08);
+}
+.field input.input-warn {
+  border-color: var(--amber) !important;
+  background: var(--input-warn);
+  box-shadow: 0 0 0 3px rgba(217,119,6,.08);
+}
+.field input.input-ok {
+  border-color: var(--green) !important;
+}
+
+/* ── FIELD HINT (inline warning under input) ── */
+.field-hint {
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 4px;
+  display: none;
+  line-height: 1.4;
+}
+.field-hint.error { color: var(--red); display: block; }
+.field-hint.warn  { color: var(--amber); display: block; }
+
+/* ── CALCULATE BUTTON — flat, clean ── */
+.calc-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 0;
+  height: 50px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  border: 1.5px solid var(--teal-mid);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background .15s, border-color .15s, color .15s;
+  letter-spacing: .15px;
+}
+.calc-btn:hover {
+  background: #d0e8e6;
+  border-color: var(--teal);
+  color: var(--teal);
+}
+.calc-btn:active { background: var(--teal-mid); }
+.calc-btn .btn-icon { display: none; }
+
+/* ── PILLS ── */
+.pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.pill {
+  padding: 6px 13px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-2);
+  background: var(--white);
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+  font-family: inherit;
+}
+.pill.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+/* ── RESULT ── */
+.result {
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 10px;
+  display: none;
+  animation: fadeSlide .3s ease;
+}
+@keyframes fadeSlide { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.result.safe { background: var(--green-bg); border: 1.5px solid #86efac; }
+.result.danger { background: var(--red-bg); border: 1.5px solid #fca5a5; }
+.result.warn { background: var(--amber-bg); border: 1.5px solid var(--amber-border); }
+
+.result-number { font-size: 56px; font-weight: 800; line-height: 1; letter-spacing: -2px; }
+.result.safe .result-number { color: var(--green); }
+.result.danger .result-number { color: var(--red); }
+.result.warn .result-number { color: var(--amber); }
+
+.result-label { font-size: 14px; font-weight: 700; margin-top: 6px; color: var(--text); }
+.result-sub { font-size: 12px; margin-top: 4px; color: var(--text-2); }
+.result-pct { font-size: 18px; font-weight: 800; margin-top: 10px; }
+.result.safe .result-pct { color: var(--green); }
+.result.danger .result-pct { color: var(--red); }
+.result.warn .result-pct { color: var(--amber); }
+
+/* ── PROGRESS BAR ── */
+.bar-wrap {
+  background: var(--border);
+  border-radius: 99px;
+  height: 8px;
+  margin: 8px 0 12px;
+  overflow: hidden;
+  display: none;
+}
+.bar-fill { height: 100%; border-radius: 99px; transition: width .5s cubic-bezier(.4,0,.2,1); }
+
+/* ── WHATSAPP ── */
+.share-btn {
+  display: none;
+  width: 100%;
+  padding: 12px;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  -webkit-tap-highlight-color: transparent;
+  font-family: inherit;
+}
+.share-btn svg { width: 17px; height: 17px; fill: #fff; flex-shrink: 0; }
+
+/* ── SUBJECTS ── */
+.subject-row {
+  display: grid;
+  grid-template-columns: 1fr 58px 58px 46px 28px;
+  gap: 5px;
+  align-items: start;
+  margin-bottom: 8px;
+}
+
+.subject-row input {
+  padding: 8px 7px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13.5px;
+  width: 100%;
+  outline: none;
+  transition: border-color .15s, background .15s;
+  font-family: inherit;
+  font-weight: 600;
+}
+.subject-row input:focus { border-color: var(--teal); }
+.subject-row input.input-error { border-color: var(--red) !important; background: var(--input-error); }
+.subject-row input.input-warn { border-color: var(--amber) !important; background: var(--input-warn); }
+
+.subject-cell { display: flex; flex-direction: column; }
+.subject-cell-hint {
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 2px;
+  display: none;
+  line-height: 1.3;
+}
+.subject-cell-hint.error { color: var(--red); display: block; }
+.subject-cell-hint.warn  { color: var(--amber); display: block; }
+
+.pct-badge {
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 8px 2px;
+  border-radius: 7px;
+  background: #f5f5f5;
+  color: #999;
+  margin-top: 0;
+}
+.pct-badge.ok { background: var(--green-bg); color: var(--green); }
+.pct-badge.bad { background: var(--red-bg); color: var(--red); }
+.pct-badge.warn { background: var(--amber-bg); color: var(--amber); }
+
+.del-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #d1d5db;
+  padding: 0;
+  line-height: 1;
+  text-align: center;
+  transition: color .15s;
+  margin-top: 8px;
+}
+.del-btn:hover { color: var(--red); }
+
+.add-btn {
+  background: none;
+  border: 2px dashed var(--border);
+  border-radius: 9px;
+  width: 100%;
+  padding: 9px;
+  font-size: 13px;
+  color: var(--text-2);
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all .15s;
+  font-family: inherit;
+  font-weight: 600;
+}
+.add-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+.col-headers {
+  display: grid;
+  grid-template-columns: 1fr 58px 58px 46px 28px;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+.col-headers span {
+  font-size: 10px;
+  color: #9ca3af;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+}
+.col-headers span:first-child { text-align: left; }
+
+.danger-alert {
+  background: var(--red-bg);
+  border: 1.5px solid #fca5a5;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--red);
+  font-weight: 600;
+  line-height: 1.5;
+}
+.danger-alert strong { display: block; font-size: 13.5px; margin-bottom: 3px; }
+
+/* ── CONDONATION ── */
+.cond-result {
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  margin-top: 12px;
+  display: none;
+  animation: fadeSlide .3s ease;
+}
+.cond-result.ok   { background: var(--green-bg); border: 1.5px solid #86efac; }
+.cond-result.need { background: var(--amber-bg); border: 1.5px solid #fcd34d; }
+.cond-result.no   { background: var(--red-bg);   border: 1.5px solid #fca5a5; }
+
+.cond-num { font-size: 48px; font-weight: 800; line-height: 1; }
+.cond-result.ok .cond-num   { color: var(--green); }
+.cond-result.need .cond-num { color: var(--amber); }
+.cond-result.no .cond-num   { color: var(--red); }
+.cond-label { font-size: 13px; font-weight: 700; margin-top: 6px; }
+.cond-sub   { font-size: 12px; margin-top: 4px; opacity: .8; line-height: 1.5; }
+
+.info-box {
+  background: var(--teal-light);
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: #374151;
+  line-height: 1.65;
+  margin-top: 14px;
+}
+.info-box strong { color: var(--teal); }
+
+/* ── MIN CLASSES ── */
+.min-result {
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  margin-top: 12px;
+  display: none;
+  background: var(--green-bg);
+  border: 1.5px solid #86efac;
+  animation: fadeSlide .3s ease;
+}
+.min-result.danger { background: var(--red-bg); border-color: #fca5a5; }
+.min-num { font-size: 52px; font-weight: 800; line-height: 1; color: var(--green); }
+.min-result.danger .min-num { color: var(--red); }
+.min-label { font-size: 13.5px; font-weight: 700; margin-top: 6px; }
+.min-sub   { font-size: 12px; margin-top: 4px; opacity: .8; }
+
+/* ── SEO SECTION ── */
+.seo-section {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+}
+.seo-section h2 { font-size: 15.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; line-height: 1.4; }
+.seo-section h3 { font-size: 13.5px; font-weight: 700; color: var(--teal); margin: 16px 0 6px; }
+.seo-section p  { font-size: 13px; color: #4b5563; line-height: 1.75; margin-bottom: 6px; }
+
+/* ── FAQ ── */
+.faq-item { border-bottom: 1px solid #f3f4f6; padding: 13px 0; }
+.faq-item:last-of-type { border-bottom: none; }
+.faq-q {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  cursor: pointer; display: flex; justify-content: space-between;
+  align-items: flex-start; gap: 8px; line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0; padding: 0;
+}
+.faq-a { font-size: 12.5px; color: #4b5563; line-height: 1.7; margin-top: 8px; display: none; }
+.faq-item.open .faq-a { display: block; }
+.faq-arrow { transition: transform .2s; color: var(--teal); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+.faq-hidden { display: none; }
+.faq-hidden.faq-visible { display: block; }
+
+.faq-view-all-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 16px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  border: 1.5px solid var(--teal-mid);
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: .1px;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.faq-view-all-btn:hover {
+  background: #d0e8e6;
+  border-color: var(--teal);
+  color: var(--teal);
+}
+.faq-view-all-btn svg {
+  width: 16px; height: 16px;
+  transition: transform .25s;
+  flex-shrink: 0;
+}
+.faq-view-all-btn.expanded svg { transform: rotate(180deg); }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; font-size: 11.5px; color: #9ca3af;
+  padding: 16px 16px 40px; line-height: 2;
+  max-width: 480px; margin: 0 auto;
+}
+footer a { color: var(--teal); text-decoration: none; font-weight: 600; }
+
+/* ── REVIEW WIDGET ── */
+.review-widget {
+  background: var(--white); border-radius: var(--radius);
+  padding: 16px 20px; box-shadow: var(--shadow); margin-bottom: 12px;
+  display: none; text-align: center;
+}
+.review-widget.visible { display: block; }
+.review-label { font-size: 12px; font-weight: 700; color: var(--text-2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .5px; }
+.stars { display: flex; gap: 6px; justify-content: center; margin-bottom: 8px; }
+.star { font-size: 28px; cursor: pointer; color: #d1d5db; transition: color .1s, transform .1s; line-height: 1; }
+.star:hover, .star.lit { color: #f59e0b; transform: scale(1.15); }
+.review-thanks { font-size: 12.5px; color: var(--teal); font-weight: 700; display: none; margin-top: 6px; }
+
+/* ── BUNK SLIDER ── */
+.slider-card { display: none; }
+.slider-wrap input[type=range] { width: 100%; accent-color: var(--teal); cursor: pointer; margin: 4px 0; }
+.slider-val { text-align: center; font-size: 34px; font-weight: 800; color: var(--teal); margin: 8px 0 2px; }
+.slider-label { text-align: center; font-size: 12px; color: var(--text-2); }
+.future-result { text-align: center; margin-top: 10px; padding: 10px 12px; border-radius: 9px; font-size: 13px; font-weight: 700; display: none; }
+
+/* ── INLINE GLOBAL ERROR BANNER ── */
+.error-banner {
+  background: var(--red-bg);
+  border: 1.5px solid var(--input-error-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: var(--red);
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: none;
+  line-height: 1.5;
+}
+.error-banner.visible { display: block; animation: fadeSlide .2s ease; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12l2 2 4-4"/></svg>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="/blogs/">Blogs</a>
+    <a href="/">About</a>
+    <a href="https://buymeacoffee.com/" target="_blank" rel="noopener" class="btn-coffee">☕ Buy me a coffee</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero-intro">
+  <h1>Attendance Calculator 75%</h1>
+  <div class="hero-sub">Find out how many classes you can bunk or how many you still need to attend. Works for 75%, 80%, and 85% requirements. Free, no login.</div>
+</div>
+
+<div class="wrap">
+
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab active" onclick="switchTab('simple',this)" role="tab" aria-selected="true">Quick Check</button>
+    <button class="tab" onclick="switchTab('subjects',this)" role="tab" aria-selected="false">Subject-wise</button>
+    <button class="tab" onclick="switchTab('condonation',this)" role="tab" aria-selected="false">Condonation</button>
+    <button class="tab" onclick="switchTab('minimum',this)" role="tab" aria-selected="false">Min Classes</button>
+  </div>
+
+  <!-- ═══ QUICK CHECK ═══ -->
+  <div id="tab-simple">
+    <div class="card">
+      <h3 class="card-title">Your Attendance</h3>
+
+      <!-- Global error banner -->
+      <div class="error-banner" id="qc-error-banner"></div>
+
+      <div class="row">
+        <div class="field">
+          <label for="attended">Classes Attended</label>
+          <input type="number" id="attended" placeholder="45" min="0" max="9999" inputmode="numeric"
+            oninput="validateQuickFields()" aria-describedby="attended-hint">
+          <div class="field-hint" id="attended-hint"></div>
+        </div>
+        <div class="field">
+          <label for="total">Total Classes Held</label>
+          <input type="number" id="total" placeholder="60" min="0" max="9999" inputmode="numeric"
+            oninput="validateQuickFields()" aria-describedby="total-hint">
+          <div class="field-hint" id="total-hint"></div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Required Attendance %</label>
+        <div class="pills" id="pills">
+          <span class="pill" onclick="setPct(60,this)">60%</span>
+          <span class="pill" onclick="setPct(65,this)">65%</span>
+          <span class="pill active" onclick="setPct(75,this)">75%</span>
+          <span class="pill" onclick="setPct(80,this)">80%</span>
+          <span class="pill" onclick="setPct(85,this)">85%</span>
+        </div>
+      </div>
+
+      <button onclick="autoCalc()" class="calc-btn" id="qc-calc-btn">
+        <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 12h6M9 17h4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span>
+        Calculate My Score
+      </button>
+
+      <div class="result" id="result">
+        <div class="result-number" id="res-num">0</div>
+        <div class="result-label" id="res-label"></div>
+        <div class="result-pct" id="res-pct"></div>
+        <div class="result-sub" id="res-sub"></div>
+      </div>
+
+      <div class="bar-wrap" id="bar-wrap">
+        <div class="bar-fill" id="bar-fill"></div>
+      </div>
+
+      <button class="share-btn" id="share-btn" onclick="shareWhatsApp()" aria-label="Share on WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Share on WhatsApp
+      </button>
+    </div>
+
+    <!-- BUNK SLIDER -->
+    <div class="card slider-card" id="slider-card">
+      <div class="card-title">Planning to Bunk?</div>
+      <div class="slider-wrap">
+        <input type="range" id="bunk-slider" min="0" max="30" value="0" oninput="updateSlider()" aria-label="Number of classes to bunk">
+        <div class="slider-val" id="slider-val">0</div>
+        <div class="slider-label">classes you want to skip</div>
+        <div class="future-result" id="future-result"></div>
+      </div>
+    </div>
+
+    <!-- REVIEW WIDGET -->
+    <div class="review-widget" id="review-widget">
+      <div class="review-label">Was this helpful?</div>
+      <div class="stars" id="stars">
+        <span class="star" onclick="rateStar(1)">★</span>
+        <span class="star" onclick="rateStar(2)">★</span>
+        <span class="star" onclick="rateStar(3)">★</span>
+        <span class="star" onclick="rateStar(4)">★</span>
+        <span class="star" onclick="rateStar(5)">★</span>
+      </div>
+      <div class="review-thanks" id="review-thanks">Thanks! Glad it helped 🙌</div>
+    </div>
+  </div>
+
+  <!-- ═══ SUBJECT-WISE ═══ -->
+  <div id="tab-subjects" style="display:none">
+    <div class="card">
+      <h3 class="card-title">Subject-wise Tracker</h3>
+
+      <div class="field" style="margin-bottom:14px">
+        <label>Required Attendance %</label>
+        <div class="pills" id="pills2">
+          <span class="pill" onclick="setPct2(60,this)">60%</span>
+          <span class="pill" onclick="setPct2(65,this)">65%</span>
+          <span class="pill active" onclick="setPct2(75,this)">75%</span>
+          <span class="pill" onclick="setPct2(80,this)">80%</span>
+          <span class="pill" onclick="setPct2(85,this)">85%</span>
+        </div>
+      </div>
+
+      <div class="col-headers">
+        <span>Subject</span>
+        <span>Present</span>
+        <span>Total</span>
+        <span>%</span>
+        <span></span>
+      </div>
+      <div id="subjects-list"></div>
+      <button class="add-btn" onclick="addSubject()">+ Add Subject</button>
+
+      <div id="danger-alerts"></div>
+
+      <button onclick="calcSubjects()" class="calc-btn" id="subj-calc-btn" style="margin-top:14px">
+        <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 12h6M9 17h4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span>
+        Calculate My Score
+      </button>
+
+      <div id="subject-summary" style="margin-top:14px;display:none">
+        <div style="background:var(--teal-light);border-radius:10px;padding:14px">
+          <div style="font-size:11px;color:var(--teal);font-weight:700;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">Overall Summary</div>
+          <div id="summary-rows"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CONDONATION ═══ -->
+  <div id="tab-condonation" style="display:none">
+    <div class="card">
+      <h3 class="card-title">Condonation Calculator</h3>
+      <p style="font-size:12.5px;color:var(--text-2);margin-bottom:14px;line-height:1.65">
+        Short on attendance? If you have a <strong style="color:var(--text)">medical certificate or duty leave</strong> (NCC, NSS, sports), your college may condone those absences.
+      </p>
+
+      <div class="error-banner" id="cond-error-banner"></div>
+
+      <div class="row">
+        <div class="field">
+          <label for="c-attended">Classes Attended</label>
+          <input type="number" id="c-attended" placeholder="48" min="0" max="9999" inputmode="numeric" aria-describedby="c-attended-hint">
+          <div class="field-hint" id="c-attended-hint"></div>
+        </div>
+        <div class="field">
+          <label for="c-total">Total Classes Held</label>
+          <input type="number" id="c-total" placeholder="80" min="0" max="9999" inputmode="numeric" aria-describedby="c-total-hint">
+          <div class="field-hint" id="c-total-hint"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Target After Condonation</label>
+          <div class="pills" id="pills-cond" style="margin-bottom:0">
+            <span class="pill" onclick="setCondPct(65,this)">65%</span>
+            <span class="pill active" onclick="setCondPct(75,this)">75%</span>
+            <span class="pill" onclick="setCondPct(80,this)">80%</span>
+            <span class="pill" onclick="setCondPct(85,this)">85%</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="c-maxcond">Max Condonation Days</label>
+          <input type="number" id="c-maxcond" placeholder="10" min="0" max="365" inputmode="numeric" value="10" aria-describedby="c-maxcond-hint">
+          <div class="field-hint" id="c-maxcond-hint"></div>
+        </div>
+      </div>
+
+      <button onclick="calcCond()" class="calc-btn">
+        <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 12h6M9 17h4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span>
+        Calculate My Score
+      </button>
+
+      <div class="cond-result" id="cond-result">
+        <div class="cond-num" id="cond-num"></div>
+        <div class="cond-label" id="cond-label"></div>
+        <div class="cond-sub" id="cond-sub"></div>
+      </div>
+
+      <div class="info-box">
+        <strong>What is attendance condonation?</strong><br>
+        Universities like AKTU, Mumbai University, and Anna University allow absences due to medical reasons or approved activities such as sports, NCC, or NSS to be counted as attendance. Students must submit valid documents and get principal approval. Usually, only 5 to 15 days can be considered, depending on university rules. Submit your application before the deadline the college announces before exams. Missing the window means condonation is not possible for that semester.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MINIMUM CLASSES ═══ -->
+  <div id="tab-minimum" style="display:none">
+    <div class="card">
+      <h3 class="card-title">Minimum Classes to Attend</h3>
+      <p style="font-size:12.5px;color:var(--text-2);margin-bottom:14px;line-height:1.65">
+        How many of the <em>remaining</em> classes must you attend to hit the required %? Enter your current situation below. This is useful when you are mid-semester and want to know the minimum classes you need to go to so you can plan your remaining days.
+      </p>
+
+      <div class="error-banner" id="min-error-banner"></div>
+
+      <div class="row">
+        <div class="field">
+          <label for="m-attended">Attended So Far</label>
+          <input type="number" id="m-attended" placeholder="35" min="0" max="9999" inputmode="numeric" aria-describedby="m-attended-hint">
+          <div class="field-hint" id="m-attended-hint"></div>
+        </div>
+        <div class="field">
+          <label for="m-total">Total Held So Far</label>
+          <input type="number" id="m-total" placeholder="55" min="0" max="9999" inputmode="numeric" aria-describedby="m-total-hint">
+          <div class="field-hint" id="m-total-hint"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="m-remaining">Remaining Classes</label>
+          <input type="number" id="m-remaining" placeholder="25" min="0" max="9999" inputmode="numeric" aria-describedby="m-remaining-hint">
+          <div class="field-hint" id="m-remaining-hint"></div>
+        </div>
+        <div class="field">
+          <label>Required %</label>
+          <div class="pills" id="pills-min" style="margin-bottom:0">
+            <span class="pill active" onclick="setMinPct(75,this)">75%</span>
+            <span class="pill" onclick="setMinPct(80,this)">80%</span>
+            <span class="pill" onclick="setMinPct(85,this)">85%</span>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="calcMin()" class="calc-btn">
+        <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M9 7h6M9 12h6M9 17h4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></span>
+        Calculate My Score
+      </button>
+
+      <div class="min-result" id="min-result">
+        <div class="min-num" id="min-num"></div>
+        <div class="min-label" id="min-label"></div>
+        <div class="min-sub" id="min-sub"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SEO CONTENT ═══ -->
+  <div class="seo-section">
+    <h2>How many classes can you miss?</h2>
+    <p>There is no single answer. It depends on how many classes have already happened and how many you have attended so far. Someone who joined late and missed the first two weeks is in a completely different spot compared to someone who has been regular until now and wants a break.</p>
+    <p>That is why this calculator exists. Enter your numbers and you get your exact bunk count. No formula to remember, no guessing.</p>
+    <p>To use it: enter the classes you have attended, the total classes held so far, and pick your college's required percentage. The calculator tells you how many you can still skip or how many you must attend. It works for 75%, 80%, and 85% requirements.</p>
+
+    <h3 id="attendance-percentage-formula">How to calculate attendance percentage</h3>
+    <p>The formula is simple. Divide classes attended by total classes held, then multiply by 100. If you attended 45 out of 60 classes, your attendance is 75%. To find your bunk limit, the math is: take the required percentage, multiply it by total classes, divide by 100, then subtract what you have already attended. That gives you the number of classes you still need. Any classes beyond that are safe to skip.</p>
+    <p>Most students get confused because the number keeps changing as new classes are added. That is why a calculator is more useful than doing it in your head.</p>
+
+    <h3 id="what-is-75-rule">What is the 75% attendance rule?</h3>
+    <p>Most colleges in India follow UGC guidelines which say a student must attend at least 75% of all classes held in a semester to be allowed to sit for exams. This is not just a warning or a fine. If you fall short, your name goes on the detained list and you do not get a hall ticket. Your marks do not matter at that point.</p>
+    <p>The rule is per subject in most colleges, not just overall. You could have 80% attendance when you add everything up, but if one subject is at 68%, you can be detained for that subject specifically. This catches a lot of students off guard. Use the <a href="#" onclick="switchTab('subjects', document.querySelectorAll('.tab')[1]);return false;" style="color:var(--teal);font-weight:700">Subject-wise tracker</a> to check each subject separately.</p>
+    <p>VTU and most engineering colleges affiliated with it require 85%, not 75%. Anna University follows 75% but has a condonation window between 65% and 74%. AKTU requires 75% and allows up to 15 days of condonation with valid documents.</p>
+
+    <h3 id="subject-wise-vs-overall">Subject-wise vs overall attendance</h3>
+    <p>Your college tracks both. The overall number is what shows on your portal or notice board. The subject-wise number is what the exam section actually checks before issuing hall tickets.</p>
+    <p>Labs and practicals are often counted separately and the way sessions are recorded varies by department. A 3-hour lab might count as one class or as three separate entries. Check with your department before deciding which sessions are safe to skip.</p>
+
+    <h3 id="university-attendance-rules">Attendance rules by university</h3>
+    <p>Different universities have different rules. Here is what most students need to know:</p>
+    <p><strong>AKTU</strong> requires 75% per subject. Condonation of up to 15 days is allowed if you submit valid medical certificates or duty leave documents approved by your HOD.</p>
+    <p><strong>VTU</strong> requires 85% per subject. There is no condonation option at the university level. If you fall short, you repeat the course.</p>
+    <p><strong>Anna University</strong> requires 75%. Students between 65% and 74% can apply for condonation with a medical certificate. Below 65% you are not eligible to sit for exams.</p>
+    <p><strong>Mumbai University</strong> requires 75%. Condonation of up to 10 days is available for medical reasons with proper documentation.</p>
+    <p><strong>Delhi University</strong> requires 66% for most programmes. Some departments set it higher, so check with your college specifically.</p>
+    <p><strong>JNTU</strong> requires 75% with a condonation provision for NCC, NSS, and sports duty with prior approval from the principal.</p>
+    <p><strong>Pune University (SPPU)</strong> requires 75%. Medical condonation is handled at the college level and the limit varies.</p>
+    <p>If your university is not listed here, select the matching percentage in the calculator and the math works the same way.</p>
+
+    <h3 id="how-condonation-works">How attendance condonation works</h3>
+    <p>Condonation means the college officially marks certain absent days as present. It only happens under specific conditions and requires paperwork. Medical absences need a certificate from a government hospital or a registered doctor with a proper stamp and signature. Duty leave covers things like representing your college in sports, NCC camp, or NSS activities.</p>
+    <p>The process is usually: collect your medical certificate or duty leave letter, get it signed by your HOD, submit to the exam section before the deadline the college announces. Most colleges have a fixed condonation window before hall tickets are issued. Missing that window means condonation is no longer possible for that semester.</p>
+    <p>Use the Condonation tab in this calculator to check if the days you can get condoned are enough to bring you above the required percentage.</p>
+
+    <h2 id="faq">Frequently Asked Questions</h2>
+
+    <div id="faq-list">
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <h3 class="faq-q">How many classes can I bunk with 75% attendance? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">It depends on where you stand right now. For every 3 classes you attend, you can skip 1. But that ratio only holds if you start from 100% and count forward. If you have already missed some classes, your remaining bunk count is lower. Enter your current numbers in the Quick Check tab and you will get the exact count for your situation.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <h3 class="faq-q">How many classes can I bunk in a semester of 90 classes? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">With a 75% requirement and 90 total classes, you need to attend at least 68 classes. That means you can miss up to 22 classes. But this only applies if you start from zero absences. If you have already missed some, subtract those from 22 to get your remaining bunk limit.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <h3 class="faq-q">What happens if attendance falls below 75%? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">You get added to the detained list and will not receive a hall ticket for that subject's exam. Most colleges send a shortage notice first so you have time to recover or apply for condonation. If condonation is not enough to bring you up, you either miss the exam entirely or apply to appear in the next available exam cycle, which delays your degree.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <h3 class="faq-q">My attendance is 74.9%. Will I be detained? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">Most likely yes. Attendance is calculated to one decimal place and 74.9% does not round up to 75% in most college systems. If you are this close, attend one more class. It is not worth the risk.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <h3 class="faq-q">Can I appear in exams with 65% attendance? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">In most colleges, no. 65% is below the 75% minimum required. Your only option is condonation. Anna University allows condonation for students between 65% and 74%. AKTU allows it too if you have valid documents and the shortfall is within the 15-day limit. For other universities, check with your exam section directly.</div>
+    </div>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <h3 class="faq-q">What documents do I need for attendance condonation? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">For medical condonation you need a certificate from a government hospital or a registered doctor. It must have the doctor's stamp, registration number, and your name with dates of illness. For duty leave you need a letter from the organising body, like a sports federation or NCC unit, and prior approval from your principal or HOD. Photocopies are usually not accepted. Submit originals to the exam section within the deadline.</div>
+    </div>
+
+    <div class="faq-item faq-hidden" onclick="toggleFaq(this)">
+      <h3 class="faq-q">Does NCC or NSS attendance count toward my college attendance? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">It depends on your college's policy. Most colleges allow duty leave for NCC camps, NSS special camps, and college sports events at the inter-university or national level. This absence can be condoned if you get prior approval from the principal before leaving, not after you return. Informal NCC parades or local NSS activities on campus generally do not count as duty leave.</div>
+    </div>
+
+    <div class="faq-item faq-hidden" onclick="toggleFaq(this)">
+      <h3 class="faq-q">Does online class attendance count the same as physical attendance? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">In most colleges today, yes. Online classes conducted on platforms like Google Meet or Zoom are marked in the same attendance register as physical classes. If you join but your name is not marked, follow up with the faculty on the same day. Retroactive corrections are harder to get.</div>
+    </div>
+
+    <div class="faq-item faq-hidden" onclick="toggleFaq(this)">
+      <h3 class="faq-q">What is the attendance rule in VTU? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">VTU requires 85% attendance per subject. There is no condonation option at the university level. Students who fall short have to repeat the course. Use the 85% option in this calculator if you are a VTU student.</div>
+    </div>
+
+    <div class="faq-item faq-hidden" onclick="toggleFaq(this)">
+      <h3 class="faq-q">Does this calculator work for AKTU, VTU, Mumbai University, and Anna University? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">Yes. Just select the correct required percentage using the buttons. AKTU is 75%, VTU is 85%, Mumbai University is 75%, Anna University is 75% for most programs. The Condonation tab also lets you enter your university's maximum condonation days so you get an accurate result.</div>
+    </div>
+
+    <div class="faq-item faq-hidden" onclick="toggleFaq(this)">
+      <h3 class="faq-q">How is lab attendance counted? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">Labs are tracked separately from theory in most colleges. A 3-hour lab session may count as one entry or as three separate hours depending on your department's recording method. The lab attendance percentage is calculated independently and you need to meet the required percentage for labs too, not just theory. Check your department's attendance sheet to confirm how they count it.</div>
+    </div>
+
+    <div class="faq-item faq-hidden" onclick="toggleFaq(this)">
+      <h3 class="faq-q">My overall attendance is fine but one subject is low. Will I be detained? <span class="faq-arrow">▾</span></h3>
+      <div class="faq-a">Yes, you can be detained for just that one subject. The exam section checks attendance subject by subject before issuing hall tickets. If even one subject is below the required percentage, you will not get the hall ticket for that exam. Use the Subject-wise tracker tab to check each subject individually.</div>
+    </div>
+
+    </div><!-- /faq-list -->
+
+    <button class="faq-view-all-btn" id="faq-toggle-btn" onclick="toggleAllFaqs()">
+      <span id="faq-btn-text">View All FAQs</span>
+      <svg id="faq-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>
+  Free · No signup · Works offline · Made for Indian college students<br>
+  <a href="/blogs/">Read our guides</a> · <a href="/">About</a> · <a href="/privacy/">Privacy</a><br>
+  <span style="display:block;margin-top:4px">© 2026 attendancecalculator75.in</span>
+</footer>
+
+<script>
+let reqPct = 75, reqPct2 = 75, condPct = 75, minPct = 75;
+let subjects = [], subjectId = 0;
+
+// ─────────────────────────────────────────────────────────────
+// SHARED VALIDATION HELPERS
+// ─────────────────────────────────────────────────────────────
+
+const MAX_CLASSES = 9999;
+
+function setFieldState(inputEl, hintEl, state, msg) {
+  // state: '' | 'error' | 'warn' | 'ok'
+  inputEl.classList.remove('input-error','input-warn','input-ok');
+  hintEl.className = 'field-hint';
+  hintEl.textContent = '';
+  if (state === 'error') { inputEl.classList.add('input-error'); hintEl.classList.add('error'); hintEl.textContent = msg; }
+  if (state === 'warn')  { inputEl.classList.add('input-warn');  hintEl.classList.add('warn');  hintEl.textContent = msg; }
+  if (state === 'ok')    { inputEl.classList.add('input-ok'); }
+}
+
+function showBanner(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (msg) { el.textContent = msg; el.classList.add('visible'); }
+  else { el.textContent = ''; el.classList.remove('visible'); }
+}
+
+// Parse a numeric input — returns NaN if blank/invalid
+function parseNum(val) {
+  if (val === '' || val === null || val === undefined) return NaN;
+  const n = Number(val);
+  return isNaN(n) ? NaN : n;
+}
+
+// ─────────────────────────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────────────────────────
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected','false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
+  ['simple','subjects','condonation','minimum'].forEach(id => {
+    document.getElementById('tab-' + id).style.display = (id === tab) ? '' : 'none';
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// PILLS
+// ─────────────────────────────────────────────────────────────
+
+function setPct(p, el) {
+  reqPct = p;
+  document.querySelectorAll('#pills .pill').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  // Auto-recalc if result is already showing
+  if (document.getElementById('result').style.display !== 'none') autoCalc();
+}
+
+function setPct2(p, el) {
+  reqPct2 = p;
+  document.querySelectorAll('#pills2 .pill').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  // Auto-recalc subjects
+  renderSubjects();
+  calcSubjects();
+}
+
+function setCondPct(p, el) {
+  condPct = p;
+  document.querySelectorAll('#pills-cond .pill').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  // Auto-recalc if result is showing
+  if (document.getElementById('cond-result').style.display !== 'none') calcCond();
+}
+
+function setMinPct(p, el) {
+  minPct = p;
+  document.querySelectorAll('#pills-min .pill').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  // Auto-recalc if result is showing
+  if (document.getElementById('min-result').style.display !== 'none') calcMin();
+}
+
+// ─────────────────────────────────────────────────────────────
+// QUICK CHECK — real-time field validation (called on input)
+// ─────────────────────────────────────────────────────────────
+
+function validateQuickFields() {
+  const aEl = document.getElementById('attended');
+  const tEl = document.getElementById('total');
+  const aHint = document.getElementById('attended-hint');
+  const tHint = document.getElementById('total-hint');
+
+  const aRaw = aEl.value;
+  const tRaw = tEl.value;
+  const a = parseNum(aRaw);
+  const t = parseNum(tRaw);
+
+  let aState = '', tState = '', aMsg = '', tMsg = '';
+  let hasError = false;
+
+  // Attended validation
+  if (aRaw !== '') {
+    if (isNaN(a) || a < 0) {
+      aState = 'error'; aMsg = 'Must be 0 or more'; hasError = true;
+    } else if (a > MAX_CLASSES) {
+      aState = 'error'; aMsg = 'Value seems too large'; hasError = true;
+    } else if (!isNaN(t) && t >= 0 && a > t) {
+      aState = 'error'; aMsg = 'Cannot exceed total classes'; hasError = true;
+    } else if (!isNaN(t) && t > 0 && (a / t * 100) === 100) {
+      aState = 'warn'; aMsg = '100% – you attended every class!';
+    } else {
+      aState = 'ok';
+    }
+  }
+
+  // Total validation
+  if (tRaw !== '') {
+    if (isNaN(t) || t < 0) {
+      tState = 'error'; tMsg = 'Must be 0 or more'; hasError = true;
+    } else if (t > MAX_CLASSES) {
+      tState = 'error'; tMsg = 'Value seems too large'; hasError = true;
+    } else if (t === 0 && aRaw !== '') {
+      tState = 'error'; tMsg = 'Total must be greater than 0'; hasError = true;
+    } else if (!isNaN(a) && a >= 0 && a > t) {
+      tState = 'error'; tMsg = 'Must be ≥ classes attended'; hasError = true;
+    } else {
+      tState = 'ok';
+    }
+  }
+
+  setFieldState(aEl, aHint, aState, aMsg);
+  setFieldState(tEl, tHint, tState, tMsg);
+
+  // Clear any previous result if inputs change
+  if (hasError || aRaw === '' || tRaw === '') {
+    hideQuickResult();
+  }
+}
+
+function hideQuickResult() {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('bar-wrap').style.display = 'none';
+  document.getElementById('slider-card').style.display = 'none';
+  document.getElementById('share-btn').style.display = 'none';
+  document.getElementById('review-widget').classList.remove('visible');
+  showBanner('qc-error-banner', '');
+}
+
+// ─────────────────────────────────────────────────────────────
+// QUICK CHECK — calculate on button click
+// ─────────────────────────────────────────────────────────────
+
+function autoCalc() {
+  const aEl = document.getElementById('attended');
+  const tEl = document.getElementById('total');
+  const aRaw = aEl.value.trim();
+  const tRaw = tEl.value.trim();
+  const a = parseNum(aRaw);
+  const t = parseNum(tRaw);
+
+  showBanner('qc-error-banner', '');
+
+  // Missing fields
+  if (aRaw === '' && tRaw === '') {
+    showBanner('qc-error-banner', 'Please enter both Classes Attended and Total Classes Held.');
+    return;
+  }
+  if (aRaw === '') {
+    showBanner('qc-error-banner', 'Please enter the number of classes attended.');
+    setFieldState(aEl, document.getElementById('attended-hint'), 'error', 'This field is required');
+    return;
+  }
+  if (tRaw === '') {
+    showBanner('qc-error-banner', 'Please enter total classes held.');
+    setFieldState(tEl, document.getElementById('total-hint'), 'error', 'This field is required');
+    return;
+  }
+
+  // Negative / NaN
+  if (isNaN(a) || a < 0) {
+    showBanner('qc-error-banner', 'Classes attended must be a valid number (0 or more).');
+    return;
+  }
+  if (isNaN(t) || t <= 0) {
+    showBanner('qc-error-banner', 'Total classes held must be greater than 0.');
+    return;
+  }
+
+  // Attended > Total
+  if (a > t) {
+    showBanner('qc-error-banner', 'Classes attended (' + a + ') cannot exceed total classes held (' + t + ').');
+    setFieldState(aEl, document.getElementById('attended-hint'), 'error', 'Cannot exceed total classes');
+    return;
+  }
+
+  // Unrealistically large
+  if (t > MAX_CLASSES) {
+    showBanner('qc-error-banner', 'Total classes seems unrealistically large – please check.');
+    return;
+  }
+
+  // All good — compute
+  const pct = (a / t) * 100;
+  const canBunk = Math.floor((a - reqPct / 100 * t) / (reqPct / 100));
+  const needed  = Math.ceil((reqPct / 100 * t - a) / (1 - reqPct / 100));
+
+  const res = document.getElementById('result');
+  const bar = document.getElementById('bar-fill');
+
+  res.style.display = 'block';
+  document.getElementById('bar-wrap').style.display = 'block';
+  document.getElementById('res-pct').textContent = pct.toFixed(1) + '% current attendance';
+
+  // Edge: exactly at limit (within 0.05)
+  const atLimit = Math.abs(pct - reqPct) < 0.05;
+
+  if (pct > reqPct && !atLimit) {
+    res.className = 'result safe';
+    const bunkSafe = Math.max(canBunk, 0);
+    document.getElementById('res-num').textContent = bunkSafe;
+    document.getElementById('res-label').textContent = bunkSafe > 0
+      ? 'classes you can still skip'
+      : "You're right at the limit – don't skip!";
+    document.getElementById('res-sub').textContent = bunkSafe > 0
+      ? a + ' attended out of ' + t + ' total'
+      : "Attending one more class will give you some buffer";
+    bar.style.background = '#22c55e';
+  } else if (atLimit) {
+    res.className = 'result warn';
+    document.getElementById('res-num').textContent = '!';
+    document.getElementById('res-num').style.fontSize = '52px';
+    document.getElementById('res-label').textContent = "You're exactly at " + reqPct + "% – the minimum!";
+    document.getElementById('res-sub').textContent = "Skipping even one class will put you below the limit. Attend the next one.";
+    bar.style.background = '#f59e0b';
+  } else {
+    res.className = 'result danger';
+    document.getElementById('res-num').textContent = needed > 0 ? needed : 0;
+    document.getElementById('res-num').style.fontSize = '56px';
+    document.getElementById('res-label').textContent = 'more classes you must attend to stay safe';
+    document.getElementById('res-sub').textContent = "You're at " + pct.toFixed(1) + "%. You need " + reqPct + "% – attend as many consecutive classes as you can.";
+    bar.style.background = '#ef4444';
+  }
+
+  const barPct = Math.min((pct / reqPct) * 100, 100);
+  bar.style.width = barPct + '%';
+
+  document.getElementById('slider-card').style.display = 'block';
+  const slider = document.getElementById('bunk-slider');
+  const maxBunk = Math.max((canBunk > 0 ? canBunk : 0) + 20, 30);
+  slider.max = maxBunk;
+  slider.value = 0;
+  document.getElementById('slider-val').textContent = '0';
+  document.getElementById('future-result').style.display = 'none';
+
+  document.getElementById('share-btn').style.display = 'flex';
+  document.getElementById('review-widget').classList.add('visible');
+}
+
+// ─────────────────────────────────────────────────────────────
+// BUNK SLIDER
+// ─────────────────────────────────────────────────────────────
+
+function updateSlider() {
+  const a = parseNum(document.getElementById('attended').value);
+  const t = parseNum(document.getElementById('total').value);
+  const bunk = parseInt(document.getElementById('bunk-slider').value);
+  document.getElementById('slider-val').textContent = bunk;
+
+  const fr = document.getElementById('future-result');
+  if (isNaN(t) || t <= 0) { fr.style.display = 'none'; return; }
+
+  const futureTotal = t + bunk;
+  const futurePct = (a / futureTotal) * 100;
+  fr.style.display = 'block';
+
+  if (futurePct >= reqPct) {
+    fr.style.background = '#dcfce7';
+    fr.style.color = '#16a34a';
+    fr.textContent = 'After skipping ' + bunk + ' more: ' + futurePct.toFixed(1) + '% – still safe';
+  } else {
+    fr.style.background = '#fee2e2';
+    fr.style.color = '#dc2626';
+    fr.textContent = 'After skipping ' + bunk + ' more: ' + futurePct.toFixed(1) + '% – below ' + reqPct + '%';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// WHATSAPP SHARE
+// ─────────────────────────────────────────────────────────────
+
+function shareWhatsApp() {
+  const a = parseNum(document.getElementById('attended').value) || 0;
+  const t = parseNum(document.getElementById('total').value) || 0;
+  const pct = t ? (a / t * 100).toFixed(1) : 0;
+  const canBunk = Math.max(0, Math.floor((a - reqPct / 100 * t) / (reqPct / 100)));
+  const msg = pct >= reqPct
+    ? 'My attendance is ' + pct + '% and I can still skip ' + canBunk + ' more classes! Check yours → attendancecalculator75.in'
+    : 'My attendance is ' + pct + '% – I need to attend more. Check your attendance → attendancecalculator75.in';
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg));
+}
+
+// ─────────────────────────────────────────────────────────────
+// REVIEW STARS
+// ─────────────────────────────────────────────────────────────
+
+function rateStar(n) {
+  const stars = document.querySelectorAll('#stars .star');
+  stars.forEach((s, i) => s.classList.toggle('lit', i < n));
+  setTimeout(() => {
+    document.getElementById('review-thanks').style.display = 'block';
+    document.getElementById('stars').style.display = 'none';
+  }, 300);
+}
+
+// ─────────────────────────────────────────────────────────────
+// SUBJECTS — add / remove / render
+// ─────────────────────────────────────────────────────────────
+
+function addSubject() {
+  subjects.push({ id: ++subjectId, name: '', present: '', total: '' });
+  renderSubjects();
+}
+
+function removeSubject(id) {
+  subjects = subjects.filter(s => s.id !== id);
+  renderSubjects();
+  calcSubjects();
+}
+
+function updateSubject(id, field, val) {
+  const s = subjects.find(s => s.id === id);
+  if (!s) return;
+  if (field === 'name') {
+    s[field] = val;
+  } else {
+    const n = val === '' ? '' : parseInt(val);
+    s[field] = (val === '' || isNaN(n)) ? '' : n;
+    // Update badge in-place to avoid losing focus
+    updateSubjectBadgeInPlace(id);
+    calcSubjects();
+    return;
+  }
+  calcSubjects();
+}
+
+function updateSubjectBadgeInPlace(id) {
+  const s = subjects.find(s => s.id === id);
+  if (!s) return;
+  const p = s.present !== '' ? parseInt(s.present) : NaN;
+  const t = s.total   !== '' ? parseInt(s.total)   : NaN;
+  const pct = (!isNaN(p) && !isNaN(t) && t > 0) ? (p / t * 100) : NaN;
+
+  let pctClass = '';
+  if (!isNaN(pct)) {
+    if (pct >= reqPct2) pctClass = 'ok';
+    else if (pct >= reqPct2 - 5) pctClass = 'warn';
+    else pctClass = 'bad';
+  }
+  const pctText = isNaN(pct) ? '--' : pct.toFixed(0) + '%';
+
+  // Find the row by subject id and update badge only
+  const rows = document.querySelectorAll('#subjects-list .subject-row');
+  const allIds = subjects.map(s => s.id);
+  const idx = allIds.indexOf(id);
+  if (idx < 0 || !rows[idx]) return;
+  const badge = rows[idx].querySelector('.pct-badge');
+  if (badge) {
+    badge.className = 'pct-badge' + (pctClass ? ' ' + pctClass : '');
+    badge.textContent = pctText;
+  }
+
+  // Update input states in-place
+  const inputs = rows[idx].querySelectorAll('input[type="number"]');
+  // present input = inputs[0], total input = inputs[1]
+  if (inputs[0]) {
+    inputs[0].classList.remove('input-error','input-ok','input-warn');
+    if (s.present !== '' && !isNaN(p)) {
+      if (p < 0 || (!isNaN(t) && p > t)) inputs[0].classList.add('input-error');
+      else inputs[0].classList.add('input-ok');
+    }
+  }
+  if (inputs[1]) {
+    inputs[1].classList.remove('input-error','input-ok','input-warn');
+    if (s.total !== '' && !isNaN(t)) {
+      if (t <= 0 || (!isNaN(p) && p > t)) inputs[1].classList.add('input-error');
+      else inputs[1].classList.add('input-ok');
+    }
+  }
+}
+
+function renderSubjects() {
+  const list = document.getElementById('subjects-list');
+  list.innerHTML = '';
+
+  subjects.forEach(s => {
+    const p = s.present !== '' ? parseInt(s.present) : NaN;
+    const t = s.total   !== '' ? parseInt(s.total)   : NaN;
+    const pct = (!isNaN(p) && !isNaN(t) && t > 0) ? (p / t * 100) : NaN;
+
+    // Determine badge class
+    let pctClass = '';
+    if (!isNaN(pct)) {
+      if (pct >= reqPct2) pctClass = 'ok';
+      else if (pct >= reqPct2 - 5) pctClass = 'warn'; // within 5% of limit — amber warning
+      else pctClass = 'bad';
+    }
+    const pctText = isNaN(pct) ? '--' : pct.toFixed(0) + '%';
+
+    // Determine input states for present/total fields
+    let presentState = '', totalState = '';
+    let presentHint = '', totalHint = '';
+
+    if (s.present !== '' && !isNaN(p)) {
+      if (p < 0) { presentState = 'error'; presentHint = 'Must be ≥ 0'; }
+      else if (!isNaN(t) && p > t) { presentState = 'error'; presentHint = 'Exceeds total'; }
+      else { presentState = 'ok'; }
+    }
+    if (s.total !== '' && !isNaN(t)) {
+      if (t <= 0) { totalState = 'error'; totalHint = 'Must be > 0'; }
+      else if (!isNaN(p) && p > t) { totalState = 'error'; totalHint = 'Less than attended'; }
+      else { totalState = 'ok'; }
+    }
+
+    const pInputClass = presentState === 'error' ? 'input-error' : (presentState === 'ok' ? 'input-ok' : '');
+    const tInputClass = totalState   === 'error' ? 'input-error' : (totalState   === 'ok' ? 'input-ok' : '');
+
+    const row = document.createElement('div');
+    row.className = 'subject-row';
+    row.innerHTML = `
+      <div class="subject-cell">
+        <input type="text" placeholder="Subject" value="${escHtml(s.name)}"
+          oninput="updateSubject(${s.id},'name',this.value)" maxlength="30" aria-label="Subject name">
+      </div>
+      <div class="subject-cell">
+        <input type="number" placeholder="Pres." value="${s.present !== '' ? s.present : ''}"
+          min="0" oninput="updateSubject(${s.id},'present',this.value)"
+          inputmode="numeric" aria-label="Classes present" class="${pInputClass}">
+        ${presentHint ? `<span class="subject-cell-hint error">${escHtml(presentHint)}</span>` : ''}
+      </div>
+      <div class="subject-cell">
+        <input type="number" placeholder="Total" value="${s.total !== '' ? s.total : ''}"
+          min="1" oninput="updateSubject(${s.id},'total',this.value)"
+          inputmode="numeric" aria-label="Total classes" class="${tInputClass}">
+        ${totalHint ? `<span class="subject-cell-hint error">${escHtml(totalHint)}</span>` : ''}
+      </div>
+      <div class="pct-badge ${pctClass}">${pctText}</div>
+      <button class="del-btn" onclick="removeSubject(${s.id})" aria-label="Remove subject">×</button>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────────────────────
+// SUBJECTS — calc / summary
+// ─────────────────────────────────────────────────────────────
+
+function calcSubjects() {
+  let totalPresent = 0, totalClasses = 0;
+  const summaryRows = [], dangerSubjects = [], warnSubjects = [];
+  let anyData = false;
+
+  subjects.forEach(s => {
+    const p = s.present !== '' ? parseInt(s.present) : NaN;
+    const t = s.total   !== '' ? parseInt(s.total)   : NaN;
+
+    // Skip invalid rows silently
+    if (!isNaN(p) && !isNaN(t) && t > 0 && p >= 0 && p <= t) {
+      anyData = true;
+      totalPresent += p;
+      totalClasses += t;
+      const pct = (p / t) * 100;
+      const safe = pct >= reqPct2;
+      const nearLimit = safe && pct < reqPct2 + 5;
+      const canBunk = safe ? Math.floor((p - reqPct2 / 100 * t) / (reqPct2 / 100)) : 0;
+      const needed  = !safe ? Math.ceil((reqPct2 / 100 * t - p) / (1 - reqPct2 / 100)) : 0;
+      const name = s.name || 'Unnamed subject';
+
+      summaryRows.push({ name, pct: pct.toFixed(1), safe, nearLimit, canBunk, needed });
+      if (!safe) dangerSubjects.push({ name, needed, pct: pct.toFixed(1) });
+      if (safe && nearLimit) warnSubjects.push({ name, canBunk, pct: pct.toFixed(1) });
+    }
+  });
+
+  // Danger alerts
+  const alertsEl = document.getElementById('danger-alerts');
+  let alertsHTML = dangerSubjects.map(d => `
+    <div class="danger-alert">
+      <strong>${escHtml(d.name)} – Below Threshold</strong>
+      You are at ${d.pct}% – attend <strong>${d.needed}</strong> consecutive class${d.needed === 1 ? '' : 'es'} to avoid detention.
+    </div>
+  `).join('');
+
+  // Near-limit warnings (amber)
+  if (warnSubjects.length > 0) {
+    alertsHTML += warnSubjects.map(w => `
+      <div class="danger-alert" style="background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber)">
+      <strong>${escHtml(w.name)} – Close to Limit</strong>
+        You are at ${w.pct}%, only ${w.canBunk} class${w.canBunk === 1 ? '' : 'es'} away from the threshold. Don't skip any more!
+      </div>
+    `).join('');
+  }
+
+  alertsEl.innerHTML = alertsHTML;
+
+  const summary = document.getElementById('subject-summary');
+  if (!anyData) { summary.style.display = 'none'; return; }
+  summary.style.display = 'block';
+
+  const overallPct = totalClasses > 0 ? ((totalPresent / totalClasses) * 100).toFixed(1) : 0;
+
+  let html = summaryRows.map(r => {
+    let badgeStyle, badgeText;
+    if (!r.safe) {
+      badgeStyle = 'background:var(--red-bg);color:var(--red)';
+      badgeText = r.pct + '% · Need +' + r.needed;
+    } else if (r.nearLimit) {
+      badgeStyle = 'background:var(--amber-bg);color:var(--amber)';
+      badgeText = r.pct + '% · Skip ' + r.canBunk;
+    } else {
+      badgeStyle = 'background:var(--green-bg);color:var(--green)';
+      badgeText = r.pct + '% · Skip ' + r.canBunk;
+    }
+    return `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(47,111,104,.12)">
+        <span style="font-size:13px;font-weight:600">${escHtml(r.name)}</span>
+        <span style="font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:6px;${badgeStyle}">${badgeText}</span>
+      </div>
+    `;
+  }).join('');
+
+  html += `
+    <div style="margin-top:12px;text-align:center">
+      <div style="font-size:10.5px;color:var(--teal);font-weight:700;letter-spacing:.5px;text-transform:uppercase">Overall Attendance</div>
+      <div style="font-size:34px;font-weight:800;color:${parseFloat(overallPct) >= reqPct2 ? 'var(--green)' : 'var(--red)'};margin:4px 0 2px">${overallPct}%</div>
+      <div style="font-size:12px;color:var(--text-2)">${totalPresent} present out of ${totalClasses} total</div>
+    </div>
+  `;
+
+  document.getElementById('summary-rows').innerHTML = html;
+}
+
+// ─────────────────────────────────────────────────────────────
+// CONDONATION CALCULATOR
+// ─────────────────────────────────────────────────────────────
+
+function calcCond() {
+  const aEl  = document.getElementById('c-attended');
+  const tEl  = document.getElementById('c-total');
+  const mEl  = document.getElementById('c-maxcond');
+  const aHint = document.getElementById('c-attended-hint');
+  const tHint = document.getElementById('c-total-hint');
+  const mHint = document.getElementById('c-maxcond-hint');
+  const el   = document.getElementById('cond-result');
+
+  const a    = parseNum(aEl.value);
+  const t    = parseNum(tEl.value);
+  const maxC = parseNum(mEl.value);
+
+  showBanner('cond-error-banner', '');
+
+  // Reset states
+  setFieldState(aEl, aHint, '', '');
+  setFieldState(tEl, tHint, '', '');
+  setFieldState(mEl, mHint, '', '');
+  el.style.display = 'none';
+
+  // Basic validation
+  if (aEl.value === '' || tEl.value === '') return;
+
+  if (isNaN(a) || a < 0) {
+    setFieldState(aEl, aHint, 'error', 'Must be 0 or more'); return;
+  }
+  if (isNaN(t) || t <= 0) {
+    setFieldState(tEl, tHint, 'error', 'Must be greater than 0'); return;
+  }
+  if (a > t) {
+    setFieldState(aEl, aHint, 'error', 'Cannot exceed total classes');
+    showBanner('cond-error-banner', 'Classes attended (' + a + ') cannot exceed total classes (' + t + ').');
+    return;
+  }
+  if (!isNaN(maxC) && maxC < 0) {
+    setFieldState(mEl, mHint, 'error', 'Must be 0 or more'); return;
+  }
+  if (!isNaN(maxC) && maxC > t) {
+    setFieldState(mEl, mHint, 'warn', 'More than total classes – check your value');
+  }
+
+  setFieldState(aEl, aHint, 'ok', '');
+  setFieldState(tEl, tHint, 'ok', '');
+
+  const pct = (a / t) * 100;
+  const daysNeeded = Math.ceil((condPct / 100 * t) - a);
+  const maxCond = isNaN(maxC) ? 10 : maxC;
+
+  el.style.display = 'block';
+
+  if (pct >= condPct) {
+    el.className = 'cond-result ok';
+    document.getElementById('cond-num').textContent = pct.toFixed(1) + '%';
+    document.getElementById('cond-num').style.fontSize = '36px';
+    document.getElementById('cond-label').textContent = 'No condonation needed – you are already above the threshold';
+    document.getElementById('cond-sub').textContent = 'You are eligible to sit for exams.';
+  } else if (daysNeeded <= 0) {
+    el.className = 'cond-result ok';
+    document.getElementById('cond-num').textContent = pct.toFixed(1) + '%';
+    document.getElementById('cond-num').style.fontSize = '36px';
+    document.getElementById('cond-label').textContent = "You're just over the threshold – you're safe!";
+    document.getElementById('cond-sub').textContent = pct.toFixed(1) + '% – no condonation required.';
+  } else if (daysNeeded <= maxCond) {
+    el.className = 'cond-result need';
+    document.getElementById('cond-num').textContent = daysNeeded;
+    document.getElementById('cond-label').textContent = 'condoned days needed to reach ' + condPct + '%';
+    document.getElementById('cond-sub').textContent = 'You have ' + pct.toFixed(1) + '%. With ' + daysNeeded + ' medical/duty leave day' + (daysNeeded === 1 ? '' : 's') + ' approved, you\'ll reach ' + condPct + '%.';
+  } else {
+    el.className = 'cond-result no';
+    document.getElementById('cond-num').textContent = daysNeeded;
+    document.getElementById('cond-label').textContent = 'days needed – but college allows only ' + maxCond;
+    document.getElementById('cond-sub').textContent = 'You need ' + daysNeeded + ' condonation days but max allowed is ' + maxCond + '. You may not be eligible. Talk to your HOD immediately.';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// MINIMUM CLASSES CALCULATOR
+// ─────────────────────────────────────────────────────────────
+
+function calcMin() {
+  const aEl  = document.getElementById('m-attended');
+  const tEl  = document.getElementById('m-total');
+  const rEl  = document.getElementById('m-remaining');
+  const aHint = document.getElementById('m-attended-hint');
+  const tHint = document.getElementById('m-total-hint');
+  const rHint = document.getElementById('m-remaining-hint');
+  const el   = document.getElementById('min-result');
+
+  const a = parseNum(aEl.value);
+  const t = parseNum(tEl.value);
+  const r = parseNum(rEl.value);
+
+  showBanner('min-error-banner', '');
+  setFieldState(aEl, aHint, '', '');
+  setFieldState(tEl, tHint, '', '');
+  setFieldState(rEl, rHint, '', '');
+  el.style.display = 'none';
+
+  if (aEl.value === '' || tEl.value === '') return;
+
+  if (isNaN(a) || a < 0) {
+    setFieldState(aEl, aHint, 'error', 'Must be 0 or more'); return;
+  }
+  if (isNaN(t) || t <= 0) {
+    setFieldState(tEl, tHint, 'error', 'Must be greater than 0'); return;
+  }
+  if (a > t) {
+    setFieldState(aEl, aHint, 'error', 'Cannot exceed total held');
+    showBanner('min-error-banner', 'Attended (' + a + ') cannot be more than Total Held (' + t + ').');
+    return;
+  }
+  if (rEl.value !== '' && (isNaN(r) || r < 0)) {
+    setFieldState(rEl, rHint, 'error', 'Must be 0 or more'); return;
+  }
+
+  // Warn if remaining is 0 (still valid — shows danger)
+  if (!isNaN(r) && r === 0) {
+    setFieldState(rEl, rHint, 'warn', 'No remaining classes – semester may be over');
+  } else if (!isNaN(r)) {
+    setFieldState(rEl, rHint, 'ok', '');
+  }
+
+  setFieldState(aEl, aHint, 'ok', '');
+  setFieldState(tEl, tHint, 'ok', '');
+
+  const remaining = isNaN(r) ? 0 : r;
+  const totalFinal = t + remaining;
+  const requiredTotal = Math.ceil(minPct / 100 * totalFinal);
+  const mustAttend = Math.max(0, requiredTotal - a);
+  const currentPct = (a / t * 100).toFixed(1);
+
+  el.style.display = 'block';
+
+  if (mustAttend === 0) {
+    el.className = 'min-result';
+    document.getElementById('min-num').textContent = '✓';
+    document.getElementById('min-num').style.fontSize = '52px';
+    document.getElementById('min-label').textContent = "You're already safe – skip all " + remaining + " remaining if needed";
+    document.getElementById('min-sub').textContent = 'Current: ' + currentPct + '% | Required: ' + minPct + '%';
+  } else if (mustAttend > remaining) {
+    el.className = 'min-result danger';
+    document.getElementById('min-num').textContent = mustAttend;
+    document.getElementById('min-num').style.fontSize = '52px';
+    document.getElementById('min-label').textContent = 'classes needed – but only ' + remaining + ' remain. Critical.';
+    document.getElementById('min-sub').textContent = 'Cannot reach ' + minPct + '% this semester. Apply for condonation immediately.';
+  } else {
+    el.className = 'min-result';
+    document.getElementById('min-num').textContent = mustAttend;
+    document.getElementById('min-num').style.fontSize = '52px';
+    document.getElementById('min-label').textContent = 'out of ' + remaining + ' remaining classes you must attend';
+    document.getElementById('min-sub').textContent = 'You can skip ' + (remaining - mustAttend) + ' of the remaining classes and still reach ' + minPct + '%.';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// FAQ
+// ─────────────────────────────────────────────────────────────
+
+function toggleFaq(el) { el.classList.toggle('open'); }
+
+function toggleAllFaqs() {
+  const hiddenItems = document.querySelectorAll('.faq-hidden');
+  const btn = document.getElementById('faq-toggle-btn');
+  const btnText = document.getElementById('faq-btn-text');
+  const expanded = btn.classList.contains('expanded');
+  if (expanded) {
+    hiddenItems.forEach(el => el.classList.remove('faq-visible'));
+    btn.classList.remove('expanded');
+    btnText.textContent = 'View All FAQs';
+  } else {
+    hiddenItems.forEach(el => el.classList.add('faq-visible'));
+    btn.classList.add('expanded');
+    btnText.textContent = 'Show Less';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+
+window.onload = () => {
+  // Add two default subject rows so the tracker isn't empty
+  addSubject();
+  addSubject();
+};
+</script>
+</body>
+</html>
