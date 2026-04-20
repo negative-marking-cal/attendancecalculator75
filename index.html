@@ -85,8 +85,6 @@ nav {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  padding-left: 200px;  
-
 }
 
 .nav-logo-icon {
@@ -124,6 +122,7 @@ nav {
   color: rgba(255,255,255,0.65);
 }
 
+/* Desktop nav links */
 .nav-links {
   display: flex;
   align-items: center;
@@ -151,10 +150,92 @@ nav {
 }
 .nav-links .btn-coffee:hover { background: rgba(255,255,255,0.25) !important; }
 
+/* Hamburger button - hidden on desktop */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 9px;
+  cursor: pointer;
+  padding: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all .25s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile dropdown menu */
+.nav-mobile-menu {
+  display: none;
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: var(--teal-dark);
+  z-index: 99;
+  padding: 8px 16px 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.nav-mobile-menu.open { display: block; animation: fadeSlide .2s ease; }
+.nav-mobile-menu a {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  padding: 13px 12px;
+  border-radius: 9px;
+  transition: background .15s;
+}
+.nav-mobile-menu a:hover { background: rgba(255,255,255,0.1); }
+.nav-mobile-menu .btn-coffee-mobile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 11px 16px;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #fff !important;
+}
+.nav-mobile-menu .btn-coffee-mobile:hover { background: rgba(255,255,255,0.22) !important; }
+
 @media (max-width: 768px) {
-  nav { padding: 0 16px; }
-  .nav-links a:not(.btn-coffee) { display: none; }
-  .nav-logo { padding-left: 60px; }  /* ← Mobile pe thoda kam */
+  nav {
+    padding: 0 12px;
+    position: relative;
+  }
+  .nav-links {
+    display: flex !important;
+    gap: 2px;
+  }
+  .nav-links a {
+    font-size: 12px;
+    padding: 6px 9px;
+  }
+  .nav-links .btn-coffee {
+    font-size: 11.5px;
+    padding: 6px 10px;
+  }
+  .nav-hamburger { display: none !important; }
+  .nav-mobile-menu { display: none !important; }
 }
 
 /* ── HERO ── */
@@ -386,6 +467,21 @@ h3.card-title, .card-title {
 .result.safe .result-pct { color: var(--green); }
 .result.danger .result-pct { color: var(--red); }
 .result.warn .result-pct { color: var(--amber); }
+
+.clear-recalc-btn {
+  background: none;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-2);
+  padding: 7px 18px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.clear-recalc-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
 
 /* ── PROGRESS BAR ── */
 .bar-wrap {
@@ -694,6 +790,16 @@ footer a { color: var(--teal); text-decoration: none; font-weight: 600; }
     <a href="/">About</a>
     <a href="https://buymeacoffee.com/" target="_blank" rel="noopener" class="btn-coffee">☕ Buy me a coffee</a>
   </div>
+  <!-- Hamburger for mobile -->
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <!-- Mobile dropdown -->
+  <div class="nav-mobile-menu" id="nav-mobile-menu">
+    <a href="/blogs/">📝 Blogs</a>
+    <a href="/">ℹ️ About</a>
+    <a href="https://buymeacoffee.com/" target="_blank" rel="noopener" class="btn-coffee-mobile">☕ Buy me a coffee</a>
+  </div>
 </nav>
 
 <!-- ── HERO ── -->
@@ -756,6 +862,9 @@ footer a { color: var(--teal); text-decoration: none; font-weight: 600; }
         <div class="result-label" id="res-label"></div>
         <div class="result-pct" id="res-pct"></div>
         <div class="result-sub" id="res-sub"></div>
+        <button onclick="clearAndRecalc()" class="clear-recalc-btn" style="margin-top:14px">
+          ↑ Clear &amp; Recalculate
+        </button>
       </div>
 
       <div class="bar-wrap" id="bar-wrap">
@@ -1216,6 +1325,38 @@ function hideQuickResult() {
 }
 
 // ─────────────────────────────────────────────────────────────
+// CLEAR & RECALCULATE
+// ─────────────────────────────────────────────────────────────
+
+function clearAndRecalc() {
+  // Clear inputs
+  document.getElementById('attended').value = '';
+  document.getElementById('total').value = '';
+  // Reset field states
+  var aEl = document.getElementById('attended');
+  var tEl = document.getElementById('total');
+  aEl.className = aEl.className.replace(/input-\w+/g, '');
+  tEl.className = tEl.className.replace(/input-\w+/g, '');
+  document.getElementById('attended-hint').className = 'field-hint';
+  document.getElementById('attended-hint').textContent = '';
+  document.getElementById('total-hint').className = 'field-hint';
+  document.getElementById('total-hint').textContent = '';
+  // Hide result + extras
+  hideQuickResult();
+  // Scroll back to calculator card
+  var calcCard = document.getElementById('tab-simple');
+  if (calcCard) {
+    var navEl = document.querySelector('nav');
+    var navSticky = navEl && getComputedStyle(navEl).position === 'sticky';
+    var offset = navSticky ? (navEl.offsetHeight + 12) : 12;
+    var top = calcCard.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+  // Focus first input
+  setTimeout(function() { document.getElementById('attended').focus(); }, 400);
+}
+
+// ─────────────────────────────────────────────────────────────
 // QUICK CHECK — calculate on button click
 // ─────────────────────────────────────────────────────────────
 
@@ -1323,6 +1464,18 @@ function autoCalc() {
 
   document.getElementById('share-btn').style.display = 'flex';
   document.getElementById('review-widget').classList.add('visible');
+
+  // Scroll result into view, offset for sticky nav
+  setTimeout(function() {
+    var resultEl = document.getElementById('result');
+    if (resultEl) {
+      var navEl = document.querySelector('nav');
+      var navSticky = navEl && getComputedStyle(navEl).position === 'sticky';
+      var offset = navSticky ? (navEl.offsetHeight + 12) : 12;
+      var top = resultEl.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }, 100);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -1794,6 +1947,41 @@ function toggleAllFaqs() {
 }
 
 // ─────────────────────────────────────────────────────────────
+// HAMBURGER MENU
+// ─────────────────────────────────────────────────────────────
+
+(function() {
+  const btn = document.getElementById('nav-hamburger');
+  const menu = document.getElementById('nav-mobile-menu');
+  if (!btn || !menu) return;
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isOpen = menu.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (!menu.contains(e.target) && e.target !== btn) {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+    }
+  });
+
+  // Close on link click
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+    });
+  });
+})();
+
+// ─────────────────────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────────────────────
 
@@ -1802,6 +1990,188 @@ window.onload = () => {
   addSubject();
   addSubject();
 };
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Attendance Calculator 75%",
+    "url": "https://attendancecalculator75.in/",
+    "description": "Free attendance calculator for Indian college students. Enter your classes attended and total classes held to find out how many you can skip or how many you still need to attend. Works for 75%, 80%, and 85% requirements. No login needed.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    },
+    "featureList": [
+      "Quick attendance check for 75%, 80%, and 85% requirements",
+      "Subject-wise attendance tracker",
+      "Attendance condonation calculator",
+      "Minimum classes calculator",
+      "Works for AKTU, VTU, Anna University, Mumbai University, Delhi University"
+    ],
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Indian college students"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Attendance Calculator 75%",
+    "url": "https://attendancecalculator75.in/",
+    "description": "Calculate your college attendance percentage instantly. Find your exact bunk limit or how many classes you still need to attend. Supports subject-wise tracking, condonation calculation, and minimum classes planning.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "softwareVersion": "1.0",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://attendancecalculator75.in/"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate attendance percentage",
+    "description": "Calculate your attendance percentage and find out how many classes you can skip or must attend.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Enter classes attended",
+        "text": "Type the total number of classes you have attended so far in the Classes Attended field."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Enter total classes held",
+        "text": "Type the total number of classes that have been held this semester in the Total Classes Held field."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Select your required attendance percentage",
+        "text": "Pick the attendance percentage your college requires. Options are 60%, 65%, 75%, 80%, and 85%."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Click Calculate My Score",
+        "text": "Hit the Calculate My Score button. The result shows your current attendance percentage and exactly how many classes you can still skip or how many you must attend."
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many classes can I bunk with 75% attendance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on where you stand right now. For every 3 classes you attend, you can skip 1. But that ratio only holds if you start from 100% and count forward. If you have already missed some classes, your remaining bunk count is lower. Enter your current numbers in the Quick Check tab to get the exact count for your situation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many classes can I bunk in a semester of 90 classes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With a 75% requirement and 90 total classes, you need to attend at least 68 classes. That means you can miss up to 22 classes. But this only applies if you start from zero absences. If you have already missed some, subtract those from 22 to get your remaining bunk limit."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if attendance falls below 75%?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You get added to the detained list and will not receive a hall ticket for that subject's exam. Most colleges send a shortage notice first so you have time to recover or apply for condonation. If condonation is not enough to bring you up, you either miss the exam entirely or apply to appear in the next available exam cycle, which delays your degree."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "My attendance is 74.9%. Will I be detained?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most likely yes. Attendance is calculated to one decimal place and 74.9% does not round up to 75% in most college systems. If you are this close, attend one more class. It is not worth the risk."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I appear in exams with 65% attendance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In most colleges, no. 65% is below the 75% minimum required. Your only option is condonation. Anna University allows condonation for students between 65% and 74%. AKTU allows it too if you have valid documents and the shortfall is within the 15-day limit. For other universities, check with your exam section directly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What documents do I need for attendance condonation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For medical condonation you need a certificate from a government hospital or a registered doctor with the doctor's stamp, registration number, and your name with dates of illness. For duty leave you need a letter from the organising body and prior approval from your principal or HOD. Submit originals to the exam section within the deadline. Photocopies are usually not accepted."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does NCC or NSS attendance count toward my college attendance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on your college's policy. Most colleges allow duty leave for NCC camps, NSS special camps, and college sports events at the inter-university or national level. You need prior approval from the principal before leaving, not after you return. Informal NCC parades or local NSS activities generally do not count as duty leave."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does online class attendance count the same as physical attendance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In most colleges today, yes. Online classes conducted on Google Meet or Zoom are marked in the same attendance register as physical classes. If you join but your name is not marked, follow up with the faculty on the same day. Retroactive corrections are harder to get."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the attendance rule in VTU?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "VTU requires 85% attendance per subject. There is no condonation option at the university level. Students who fall short have to repeat the course. Use the 85% option in this calculator if you are a VTU student."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this calculator work for AKTU, VTU, Mumbai University, and Anna University?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Select the correct required percentage using the buttons. AKTU is 75%, VTU is 85%, Mumbai University is 75%, Anna University is 75% for most programs. The Condonation tab also lets you enter your university's maximum condonation days so you get an accurate result."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "My overall attendance is fine but one subject is low. Will I be detained?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, you can be detained for just that one subject. The exam section checks attendance subject by subject before issuing hall tickets. If even one subject is below the required percentage, you will not get the hall ticket for that exam. Use the Subject-wise tracker tab to check each subject individually."
+        }
+      }
+    ]
+  }
+]
 </script>
 </body>
 </html>
